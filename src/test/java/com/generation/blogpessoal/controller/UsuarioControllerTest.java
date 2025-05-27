@@ -42,6 +42,7 @@ public class UsuarioControllerTest {
 	
 	@BeforeAll
 	void start() {
+		
 		usuarioRepository.deleteAll();
 		usuarioService.cadastrarUsuario(TestBuilder.criarUsuarioRoot());
 	}
@@ -82,15 +83,19 @@ public class UsuarioControllerTest {
 		assertEquals(HttpStatus.BAD_REQUEST, resposta.getStatusCode());
 		
 	}
+	
 	@Test
-	@DisplayName("Deve atualizar os dados de um usuário com sucesso")
+	@DisplayName("Deve atualizar um usuário existente")
 	public void deveAtualizarUmUsuario() {
 		
 		//Given
-		Usuario usuario = TestBuilder.criarUsuario(null, "Giovana Lucia Freitas", "giovana_lf@email.com.br", "12345678");	
+		Usuario usuario = TestBuilder.criarUsuario
+				(null, "Giovana Lucia Freitas", "giovana_lf@email.com.br", "12345678");	
+		
 		Optional<Usuario> usuarioCadastrado = usuarioService.cadastrarUsuario(usuario);
 		
-		Usuario usuarioUpdate = TestBuilder.criarUsuario(usuarioCadastrado.get().getId(), "Giovana Lucia Freitas", "giovana_lf@email.com.br", "12345678");
+		Usuario usuarioUpdate = TestBuilder.criarUsuario
+				(usuarioCadastrado.get().getId(), "Giovana Lucia Freitas", "giovana_lf@email.com.br", "12345678");
 		
 		//When
 		HttpEntity<Usuario> requisicao = new HttpEntity<Usuario>(usuarioUpdate);
@@ -111,8 +116,11 @@ public class UsuarioControllerTest {
 		
 	
 		//Given
-		usuarioService.cadastrarUsuario(TestBuilder.criarUsuario(null, "Jovani Almeida", "jovani_almeida@email.com.br", "12345678"));
-		usuarioService.cadastrarUsuario(TestBuilder.criarUsuario(null, "Carlos Garcia", "carlos_garcia@email.com.br", "12345678"));
+		usuarioService.cadastrarUsuario(TestBuilder.criarUsuario
+				(null, "Jovani Almeida", "jovani_almeida@email.com.br", "12345678"));
+		
+		usuarioService.cadastrarUsuario(TestBuilder.criarUsuario
+				(null, "Carlos Garcia", "carlos_garcia@email.com.br", "12345678"));
 		
 		//When
 		ResponseEntity<Usuario[]> resposta = testRestTemplate
@@ -123,5 +131,28 @@ public class UsuarioControllerTest {
 		assertEquals(HttpStatus.OK, resposta.getStatusCode());
 		assertNotNull(resposta.getBody());
 	}
+	
+	@Test
+	@DisplayName("Deve buscar um usuário por ID")
+	public void deveBuscarUsuarioPorId() {
+
+	    // Given
+	    Optional<Usuario> usuario = usuarioService.cadastrarUsuario(
+	        TestBuilder.criarUsuario(null, "Carlos Duvilio", "carlosduvilio@email.com", "12345678")
+	    );
+	    Long id = usuario.get().getId();
+
+	    // When
+	    ResponseEntity<Usuario> resposta = testRestTemplate
+	            .withBasicAuth(USUARIO_ROOT_EMAIL, USUARIO_ROOT_SENHA)
+	            .exchange(BASE_URL_USUARIOS + "/" + id, HttpMethod.GET, null, Usuario.class);
+
+	    // Then
+	    assertEquals(HttpStatus.OK, resposta.getStatusCode());
+	    assertNotNull(resposta.getBody());
+	    assertEquals("Carlos Duvilio", resposta.getBody().getNome());
+	    assertEquals("carlosduvilio@email.com", resposta.getBody().getUsuario());
+	}
+	
 		
 }

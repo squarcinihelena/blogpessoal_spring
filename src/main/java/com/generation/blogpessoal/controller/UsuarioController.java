@@ -1,6 +1,6 @@
 package com.generation.blogpessoal.controller;
 
-import java.util.List;
+import java.util.List; 
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,6 @@ public class UsuarioController {
 	public ResponseEntity<List<Usuario>> getAll() {
 
 		return ResponseEntity.ok(usuarioService.getAll());
-
 	}
 
 	@GetMapping("/{id}")
@@ -63,5 +62,6 @@ public class UsuarioController {
 				.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(resposta))
 				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
 	}
+	
 	
 }

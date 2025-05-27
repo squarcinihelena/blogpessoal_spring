@@ -10,6 +10,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
 	Optional<Usuario> findByUsuario(String usuario);
 
-	/* SELECT * FROM tb_postagens WHERE usuario = ? */
+	Optional<Usuario> findByUsuarioIgnoreCase(String usuario);
+	
+	/* SELECT * FROM tb_usuarios WHERE usuario = ? */
 
 }
