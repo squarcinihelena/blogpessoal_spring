@@ -16,4 +16,5 @@ public class TestBuilder {
 	public static Usuario criarUsuarioRoot() {
 		return criarUsuario(null, "Root", "root@email.com", "rootroot");
 	}
+	
 }

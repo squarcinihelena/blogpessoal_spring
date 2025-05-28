@@ -172,7 +172,7 @@ Para executar os códigos localmente, você precisará:
 1. Clone o repositório do Projeto [Blog Pessoal](https://github.com/squarcinihelena/blogpessoal_spring.git) dentro da pasta do *Workspace* do STS
  
 ```bash
-git clone https://github.com/rafaelq80/blogpessoal_spring_t82.git
+git clone https://github.com/squarcinihelena/blogpessoal_spring.git
 ```
  
 2. **Abra o STS** e selecione a pasta do *Workspace* onde você clonou o repositório do projeto

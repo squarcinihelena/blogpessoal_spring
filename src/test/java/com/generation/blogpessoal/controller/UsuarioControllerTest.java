@@ -154,5 +154,7 @@ public class UsuarioControllerTest {
 	    assertEquals("carlosduvilio@email.com", resposta.getBody().getUsuario());
 	}
 	
+	 
+	
 		
 }
