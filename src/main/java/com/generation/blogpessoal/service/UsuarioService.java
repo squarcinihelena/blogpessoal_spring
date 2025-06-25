@@ -38,12 +38,12 @@ public class UsuarioService {
 	}
 
 	public Optional<Usuario> cadastrarUsuario(Usuario usuario) {
-
 		if (usuarioRepository.findByUsuario(usuario.getUsuario()).isPresent()) {
 			return Optional.empty();
 		}
 
 		usuario.setSenha(criptografarSenha(usuario.getSenha()));
+		usuario.setId(null);
 
 		return Optional.ofNullable(usuarioRepository.save(usuario));
 	}
